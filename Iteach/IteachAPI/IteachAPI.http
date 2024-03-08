@@ -1,0 +1,6 @@
+@IteachAPI_HostAddress = http://localhost:5214
+
+GET {{IteachAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
