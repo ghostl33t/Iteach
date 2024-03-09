@@ -1,4 +1,6 @@
 using IteachAPI.Data;
+using IteachAPI.OpenAI;
+using IteachAPI.Repositories;
 using IteachAPI.Services.Interfaces;
 using IteachAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 
+#region DatabaseConn
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var mainConnectionString = builder.Configuration.GetConnectionString("DBConnection");
@@ -26,17 +29,31 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to server!");
     }
 });
+#endregion
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+builder.Services.AddCors(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000") // Promijenite na odgovarajucu adresu vašeg React aplikacije
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
-app.UseHttpsRedirection();
+builder.Services.AddScoped<IOpenAI, OpenAI>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+var app = builder.Build();
+app.UseCors("AllowReactApp");
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

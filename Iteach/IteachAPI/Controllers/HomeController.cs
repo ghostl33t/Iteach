@@ -1,7 +1,6 @@
-﻿using Azure.AI.OpenAI;
-using IteachAPI.Services;
+﻿using IteachAPI.OpenAI;
 using Microsoft.AspNetCore.Mvc;
-using OpenAI_API;
+using System.Text.Json;
 namespace IteachAPI.Controllers;
 
 
@@ -9,11 +8,15 @@ namespace IteachAPI.Controllers;
 [Route("[controller]")]
 public class HomeController : Controller
 {
-    [HttpGet]
-    public async Task<IActionResult> TestChatGPTRes()
+    private IOpenAI _openAiService;
+    public HomeController(IOpenAI openAiService)
     {
-        //OpenAIClient client = new OpenAIClient("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");
-        //var openAiResponse = await client.GetCompletionsAsync("text-davinci-003", "Koliko je 2 + 2");
-        return Ok("");
+        _openAiService = openAiService; 
+    }
+    [HttpPost]
+    public async Task<IActionResult> TestChatGPTRes(string question)
+    {
+        var chatGPTres = await _openAiService.OpenAIRequest(question);
+        return Ok(chatGPTres);
     } 
 }
