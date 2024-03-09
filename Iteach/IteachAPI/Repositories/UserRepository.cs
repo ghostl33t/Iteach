@@ -36,7 +36,7 @@ public class UserRepository : IUserRepository
         {
             Email = user.Email,
             Id = user.Id,
-            Role = user.Roles
+            Roles = user.Roles
         };
         return userDto;
     }

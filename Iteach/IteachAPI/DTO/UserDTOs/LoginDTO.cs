@@ -8,5 +8,5 @@ public class LoginResponse
 {
     public int Id { get; set; }
     public string Email { get; set; } = string.Empty;
-    public int Role { get; set; }    
+    public int Roles { get; set; }    
 }
