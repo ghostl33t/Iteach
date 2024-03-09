@@ -3,9 +3,9 @@ using IteachAPI.Models.MtMTables;
 
 namespace IteachAPI.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserServiceS
     {
-        public string GenerateTest(string description);
+        
         public bool PostChildInformations (TestResponse testRespons);
 
     }
