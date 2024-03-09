@@ -43,7 +43,6 @@ public class UserRepository : IUserRepository
     public async Task<User> GetUserById(int id, int role)
     {
         var userExists = await _dbContext.Users
-                                         .AsNoTracking()
                                          .Where(x => x.Id == id && x.Roles == role)
                                          .FirstOrDefaultAsync();
         if (userExists == null)
