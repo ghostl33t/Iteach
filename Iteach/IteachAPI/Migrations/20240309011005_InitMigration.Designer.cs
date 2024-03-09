@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IteachAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240309005926_Initial migration")]
-    partial class Initialmigration
+    [Migration("20240309011005_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,22 +26,22 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.Child", b =>
                 {
-                    b.Property<int>("ChildId")
+                    b.Property<long>("ChildId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChildId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ChildId"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("ParentUserId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ParentUserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ChildId");
 
@@ -58,11 +58,11 @@ namespace IteachAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<long>("ChildId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
+                    b.Property<long>("TestId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -81,11 +81,11 @@ namespace IteachAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("TeachPlanId")
-                        .HasColumnType("int");
+                    b.Property<long>("TeachPlanId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("TeacherUserId")
-                        .HasColumnType("int");
+                    b.Property<long>("TeacherUserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -104,15 +104,15 @@ namespace IteachAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<long>("ChildId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
+                    b.Property<long>("TestId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -125,11 +125,11 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.TeachPlan", b =>
                 {
-                    b.Property<int>("TeachPlanId")
+                    b.Property<long>("TeachPlanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeachPlanId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TeachPlanId"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -140,7 +140,7 @@ namespace IteachAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("TeachPlanId");
 
@@ -149,11 +149,11 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.Test", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<long>("TestId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TestId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -161,7 +161,7 @@ namespace IteachAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("TestId");
 
@@ -170,40 +170,40 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UserId"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Roles")
-                        .HasColumnType("int");
+                    b.Property<short>("Roles")
+                        .HasColumnType("smallint");
 
                     b.HasKey("UserId");
 
@@ -214,9 +214,7 @@ namespace IteachAPI.Migrations
                 {
                     b.HasOne("IteachAPI.Models.User", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentUserId");
 
                     b.Navigation("Parent");
                 });

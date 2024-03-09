@@ -1,4 +1,6 @@
 using IteachAPI.Data;
+using IteachAPI.OpenAI;
+using IteachAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region DatabaseConn
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var mainConnectionString = builder.Configuration.GetConnectionString("DBConnection");
@@ -22,7 +25,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to server!");
     }
 });
-
+#endregion
+builder.Services.AddScoped<IOpenAI, OpenAI>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
