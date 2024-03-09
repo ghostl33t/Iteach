@@ -25,6 +25,7 @@ public class UserController : ControllerBase
         newUser.Gender = newUserDto.Gender;
         newUser.Active = newUserDto.Active;
         newUser.Password = newUserDto.Password;
+        newUser.Roles = newUserDto.Roles;
 
         var userGenerated = await _userRepository.CreateUserAsync(newUser);
         if (userGenerated)
@@ -40,6 +41,27 @@ public class UserController : ControllerBase
             return BadRequest("User doesn't exist!");
 
         return Ok($"UserId = {userId}");
+    }
+    [Route("child-add")]
+    [HttpPost]
+    public async Task<IActionResult> ChildAdd([FromBody] ChildAddDTO childAddDto)
+    {
+        /* check if user is teacher */
+        var teacher = await _userRepository.GetUserById(childAddDto.TeacherId, 0);
+        if (teacher.UserId == 0)
+            return BadRequest("Invalid teacher user!");
+        /* check if parent exists */
+        var parent = await _userRepository.GetUserById(childAddDto.ParentId, 1);
+        if (parent.UserId == 0)
+            return BadRequest("Parent doesn't exist in database!");
 
+        var child = new Child();
+        child.Parent = parent;
+        child.FirstName = childAddDto.FirstName;
+        child.LastName = childAddDto.LastName;
+
+        var generatedChildId = await _userRepository.AddChild(child);
+
+        return Ok(generatedChildId);
     }
 }
