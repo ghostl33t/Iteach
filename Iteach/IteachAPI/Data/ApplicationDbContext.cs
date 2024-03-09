@@ -10,13 +10,13 @@ public class ApplicationDbContext : DbContext
 
     }
 
-    public DbSet<User> UserTable { get; set; }  
-    public DbSet<Child> ChildsTable { get; set; }
-    public DbSet<TeachPlan> TeachPlanTable { get; set; }
-    public DbSet<Test> TestTable { get; set; }
-    public DbSet<ChildTest> ChildTestTable { get; set; }
-    public DbSet<TeachPlanUser> TeachPlanUserTable { get; set; }
-    public DbSet<TestResponse> TestResponseTable { get; set; }
+    public DbSet<User> Users { get; set; }  
+    public DbSet<Child> Childs { get; set; }
+    public DbSet<TeachPlan> TeachPlans { get; set; }
+    public DbSet<Test> Tests { get; set; }
+    public DbSet<ChildTest> ChildTests { get; set; }
+    public DbSet<TeachPlanUser> TeachPlanUsers { get; set; }
+    public DbSet<TestResponse> TestResponses { get; set; }
     public DbSet<Suggestion> Suggestions { get; set; }
 
 }

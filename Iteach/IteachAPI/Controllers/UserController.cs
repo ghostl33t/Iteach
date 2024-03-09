@@ -48,11 +48,11 @@ public class UserController : ControllerBase
     {
         /* check if user is teacher */
         var teacher = await _userRepository.GetUserById(childAddDto.TeacherId, 0);
-        if (teacher.UserId == 0)
+        if (teacher.Id == 0)
             return BadRequest("Invalid teacher user!");
         /* check if parent exists */
         var parent = await _userRepository.GetUserById(childAddDto.ParentId, 1);
-        if (parent.UserId == 0)
+        if (parent.Id == 0)
             return BadRequest("Parent doesn't exist in database!");
 
         var child = new Child();

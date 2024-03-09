@@ -14,15 +14,15 @@ public class ChildRepository : IChildRepository
     }
     public async Task<Child> GetChildById(int id)
     {
-        return await _dbContext.ChildsTable.FirstOrDefaultAsync(x => x.ChildId == id);
+        return await _dbContext.Childs.FirstOrDefaultAsync(x => x.Id == id);
     }
     public async Task<Child> GetChildWithParentById(int id)
     {
-        return await _dbContext.ChildsTable.Include(x => x.Parent).FirstOrDefaultAsync(x => x.ChildId == id);
+        return await _dbContext.Childs.Include(x => x.Parent).FirstOrDefaultAsync(x => x.Id == id);
     }
     public async Task<List<ChildTest>> GetSuggestionForChild(int childId)
     {
-        var listOfTests = await _dbContext.ChildTestTable
+        var listOfTests = await _dbContext.ChildTests
                                            .AsNoTracking()
                                            .Include(x => x.Test)
                                            .Where(x => x.ChildId == childId).ToListAsync();

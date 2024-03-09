@@ -98,8 +98,20 @@ public class TestsController : Controller
         };
         await _childRepository.WriteSuggestionForChild(suggestion);
 
-
-
         return Ok(suggestionDto);
+    }
+    [Route("get-tests-results")]
+    [HttpPost]
+    public async Task<IActionResult> GetTestAndResult([FromBody]TestsGetDTO testsDto)
+    {
+        var res = await _testRepository.GetTestAndResult(testsDto);
+        return Ok(res);
+    }
+    [Route("get-tests-list")]
+    [HttpGet]
+    public async Task<IActionResult> GetTestsList()
+    {
+        var res = await _testRepository.GetTests();
+        return Ok(res);
     }
 }

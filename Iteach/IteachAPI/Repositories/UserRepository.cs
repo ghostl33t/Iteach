@@ -26,23 +26,25 @@ public class UserRepository : IUserRepository
     }
     public async Task<LoginResponse> LoginUser(LoginDTO loginDto)
     {
-        var user = await _dbContext.UserTable
+        var user = await _dbContext.Users
                                     .Where(x => x.Email == loginDto.Email 
                                     && x.Password == loginDto.Password)
                                     .FirstOrDefaultAsync();
+        if (user == null) 
+            return new LoginResponse();
         var userDto = new LoginResponse()
         {
             Email = user.Email,
-            Id = user.UserId,
+            Id = user.Id,
             Role = user.Roles
         };
         return userDto;
     }
     public async Task<User> GetUserById(int id, int role)
     {
-        var userExists = await _dbContext.UserTable
+        var userExists = await _dbContext.Users
                                          .AsNoTracking()
-                                         .Where(x => x.UserId == id && x.Roles == role)
+                                         .Where(x => x.Id == id && x.Roles == role)
                                          .FirstOrDefaultAsync();
         if (userExists == null)
             return new User();
@@ -56,7 +58,7 @@ public class UserRepository : IUserRepository
 
             await _dbContext.AddAsync(child);
             await _dbContext.SaveChangesAsync();
-            return child.ChildId;
+            return child.Id;
         }
         catch (Exception)
         {

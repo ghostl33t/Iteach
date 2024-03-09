@@ -7,7 +7,7 @@ namespace IteachAPI.Models
     {
         [Key]
         [Column(TypeName = "bigint")]
-        public int TeachPlanId { get; set; }
+        public int Id { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(30)")]
         public string Name { get; set; } = string.Empty;
