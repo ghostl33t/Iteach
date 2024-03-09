@@ -23,11 +23,11 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.Child", b =>
                 {
-                    b.Property<long>("ChildId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ChildId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -37,14 +37,14 @@ namespace IteachAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<long?>("ParentUserId")
+                    b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ChildId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ParentUserId");
+                    b.HasIndex("ParentId");
 
-                    b.ToTable("ChildsTable");
+                    b.ToTable("Childs");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.MtMTables.ChildTest", b =>
@@ -71,7 +71,7 @@ namespace IteachAPI.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("ChildTestTable");
+                    b.ToTable("ChildTests");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.MtMTables.TeachPlanUser", b =>
@@ -85,16 +85,16 @@ namespace IteachAPI.Migrations
                     b.Property<long>("TeachPlanId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TeacherUserId")
+                    b.Property<long>("TeacherId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TeachPlanId");
 
-                    b.HasIndex("TeacherUserId");
+                    b.HasIndex("TeacherId");
 
-                    b.ToTable("TeachPlanUserTable");
+                    b.ToTable("TeachPlanUsers");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.MtMTables.TestResponse", b =>
@@ -121,7 +121,7 @@ namespace IteachAPI.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestResponseTable");
+                    b.ToTable("TestResponses");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.Suggestion", b =>
@@ -152,11 +152,11 @@ namespace IteachAPI.Migrations
 
             modelBuilder.Entity("IteachAPI.Models.TeachPlan", b =>
                 {
-                    b.Property<long>("TeachPlanId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TeachPlanId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -169,18 +169,18 @@ namespace IteachAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("TeachPlanId");
+                    b.HasKey("Id");
 
-                    b.ToTable("TeachPlanTable");
+                    b.ToTable("TeachPlans");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.Test", b =>
                 {
-                    b.Property<long>("TestId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TestId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -190,18 +190,23 @@ namespace IteachAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("TestId");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
-                    b.ToTable("TestTable");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.User", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -232,16 +237,16 @@ namespace IteachAPI.Migrations
                     b.Property<short>("Roles")
                         .HasColumnType("smallint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.ToTable("UserTable");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.Child", b =>
                 {
                     b.HasOne("IteachAPI.Models.User", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentUserId");
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
@@ -275,7 +280,7 @@ namespace IteachAPI.Migrations
 
                     b.HasOne("IteachAPI.Models.User", "Teacher")
                         .WithMany()
-                        .HasForeignKey("TeacherUserId")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -312,6 +317,17 @@ namespace IteachAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Child");
+                });
+
+            modelBuilder.Entity("IteachAPI.Models.Test", b =>
+                {
+                    b.HasOne("IteachAPI.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,12 +7,19 @@ namespace IteachAPI.Models
     {
         [Key]
         [Column(TypeName = "bigint")]
-        public int TestId { get; set; }
+        public int Id { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(30)")]
         public string Name { get; set; } = string.Empty;
         [Required]
         [Column(TypeName = "nvarchar(max)")]
         public string Description { get; set; } = string.Empty;
+        
+        
+        [Column(TypeName = "bigint")]
+        public int UserId { get; set; }
+
+        [ForeignKey("UserId")] // Specify the foreign key property
+        public User User { get; set; }
     }
 }
