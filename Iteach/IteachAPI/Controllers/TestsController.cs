@@ -117,4 +117,11 @@ public class TestsController : Controller
         var res = await _testRepository.GetTests();
         return Ok(res);
     }
+    [Route("get-childs-list")]
+    [HttpGet]
+    public async Task<IActionResult> GetParents()
+    {
+        var res = await _childRepository.GetListOfChilds();
+        return Ok(res);
+    }
 }

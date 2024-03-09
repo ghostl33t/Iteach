@@ -42,5 +42,14 @@ public class ChildRepository : IChildRepository
             throw;
         }
     }
+    public async Task<List<ChildDTO>> GetListOfChilds()
+    {
+        var childs = await _dbContext.Childs.Include(x => x.Parent).AsNoTracking().ToListAsync();
+        var childsDto = new List<ChildDTO>();
+        foreach (var item in childs)
+            childsDto.Add(new ChildDTO() { Id = item.Id, ChildName = $"{item.FirstName} ({item.Parent.FirstName}) {item.LastName} " });
+
+        return childsDto;
+    }
     /*TODO: GetSuggestion */
 }
