@@ -24,13 +24,19 @@ public class UserRepository : IUserRepository
         }
         return true;
     }
-    public async Task<int> LoginUser(LoginDTO loginDto)
+    public async Task<LoginResponse> LoginUser(LoginDTO loginDto)
     {
         var user = await _dbContext.UserTable
                                     .Where(x => x.Email == loginDto.Email 
                                     && x.Password == loginDto.Password)
-                                    .Select(x => x.UserId).FirstOrDefaultAsync();
-        return user;
+                                    .FirstOrDefaultAsync();
+        var userDto = new LoginResponse()
+        {
+            Email = user.Email,
+            Id = user.UserId,
+            Role = user.Roles
+        };
+        return userDto;
     }
     public async Task<User> GetUserById(int id, int role)
     {
