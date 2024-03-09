@@ -24,6 +24,7 @@ public class UserController : ControllerBase
         newUser.Email = newUserDto.Email;
         newUser.Gender = newUserDto.Gender;
         newUser.Active = newUserDto.Active;
+        newUser.Password = newUserDto.Password;
 
         var userGenerated = await _userRepository.CreateUserAsync(newUser);
         if (userGenerated)

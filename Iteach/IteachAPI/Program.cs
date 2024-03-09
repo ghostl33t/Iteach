@@ -26,18 +26,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     }
 });
 #endregion
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000") // Promijenite na odgovarajucu adresu vašeg React aplikacije
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddScoped<IOpenAI, OpenAI>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
+app.UseCors("AllowReactApp");
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
