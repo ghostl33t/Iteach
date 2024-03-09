@@ -68,7 +68,7 @@ public class TestsController : Controller
     }
     [Route("child-suggestion")]
     [HttpPost]
-    public async Task<IActionResult> GetSuggestionForChild(int childId)
+    public async Task<IActionResult> GetSuggestionForChild([FromBody]int childId)
     {
         var child = await _childRepository.GetChildWithParentById(childId);
         if (child == null)
@@ -119,7 +119,7 @@ public class TestsController : Controller
     }
     [Route("get-childs-list")]
     [HttpGet]
-    public async Task<IActionResult> GetParents()
+    public async Task<IActionResult> GetListOfChilds()
     {
         var res = await _childRepository.GetListOfChilds();
         return Ok(res);
