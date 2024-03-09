@@ -40,7 +40,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginDTO userCreds)
     {
         var user = await _userRepository.LoginUser(userCreds);
-        if (user == null) 
+        if (user.Id == 0) 
             return BadRequest("User doesn't exist!");
 
         return Ok(user);
