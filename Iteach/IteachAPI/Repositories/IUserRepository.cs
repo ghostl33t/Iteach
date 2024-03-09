@@ -8,4 +8,5 @@ public interface IUserRepository
     public Task<LoginResponse> LoginUser(LoginDTO loginDto);
     public Task<User> GetUserById(int id, int role);
     public Task<int> AddChild(Child child);
+    public Task<bool> IsUserUnique(string email);
 }
