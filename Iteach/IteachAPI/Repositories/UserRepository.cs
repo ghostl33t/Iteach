@@ -66,4 +66,12 @@ public class UserRepository : IUserRepository
             throw;
         }
     }
+    public async Task<bool> IsUserUnique(string email)
+    {
+        var userExists = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+        if (userExists != null)
+            return false;
+
+        return true;
+    }
 }

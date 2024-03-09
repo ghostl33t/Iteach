@@ -17,6 +17,9 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUserAsync([FromBody] RegisterDTO newUserDto)
     {
+        if (!await _userRepository.IsUserUnique(newUserDto.Email))
+            return BadRequest("User with parsed email already exists in the database!");
+
         var newUser = new User();
         newUser.FirstName = newUserDto.FirstName;
         newUser.LastName = newUserDto.LastName;
