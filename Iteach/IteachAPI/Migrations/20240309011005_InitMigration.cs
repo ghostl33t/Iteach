@@ -5,7 +5,7 @@
 namespace IteachAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialmigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +14,9 @@ namespace IteachAPI.Migrations
                 name: "TeachPlanTable",
                 columns: table => new
                 {
-                    TeachPlanId = table.Column<int>(type: "int", nullable: false)
+                    TeachPlanId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -29,9 +29,9 @@ namespace IteachAPI.Migrations
                 name: "TestTable",
                 columns: table => new
                 {
-                    TestId = table.Column<int>(type: "int", nullable: false)
+                    TestId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -43,16 +43,16 @@ namespace IteachAPI.Migrations
                 name: "UserTable",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(16)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
-                    Roles = table.Column<int>(type: "int", nullable: false)
+                    Roles = table.Column<short>(type: "smallint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,11 +63,11 @@ namespace IteachAPI.Migrations
                 name: "ChildsTable",
                 columns: table => new
                 {
-                    ChildId = table.Column<int>(type: "int", nullable: false)
+                    ChildId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentUserId = table.Column<int>(type: "int", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    ParentUserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,8 +76,7 @@ namespace IteachAPI.Migrations
                         name: "FK_ChildsTable_UserTable_ParentUserId",
                         column: x => x.ParentUserId,
                         principalTable: "UserTable",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -86,8 +85,8 @@ namespace IteachAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TeachPlanId = table.Column<int>(type: "int", nullable: false),
-                    TeacherUserId = table.Column<int>(type: "int", nullable: false)
+                    TeachPlanId = table.Column<long>(type: "bigint", nullable: false),
+                    TeacherUserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,8 +111,8 @@ namespace IteachAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ChildId = table.Column<int>(type: "int", nullable: false),
-                    TestId = table.Column<int>(type: "int", nullable: false)
+                    ChildId = table.Column<long>(type: "bigint", nullable: false),
+                    TestId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,8 +137,8 @@ namespace IteachAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TestId = table.Column<int>(type: "int", nullable: false),
-                    ChildId = table.Column<int>(type: "int", nullable: false),
+                    TestId = table.Column<long>(type: "bigint", nullable: false),
+                    ChildId = table.Column<long>(type: "bigint", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
