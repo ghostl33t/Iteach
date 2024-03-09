@@ -5,6 +5,7 @@ using IteachAPI.OpenAI;
 using IteachAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
+using System.Data;
 
 namespace IteachAPI.Controllers;
 
@@ -33,6 +34,8 @@ public class TestsController : Controller
         var test = new Test();
         test.Name = testDto.Name;
         test.Description = chatGPT_res;
+        testDto.Role = 0;
+        test.Teacher = await _userRepository.GetUserById(testDto.UserId, testDto.Role);
 
         var generatedTest = await _testRepository.AddGeneratedTest(test);
         if (generatedTest)

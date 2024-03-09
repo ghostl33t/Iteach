@@ -17,9 +17,9 @@ namespace IteachAPI.Models
         
         
         [Column(TypeName = "bigint")]
-        public int UserId { get; set; }
+        public int TeacherId { get; set; }
 
-        [ForeignKey("UserId")] // Specify the foreign key property
-        public User User { get; set; }
+        [ForeignKey("TeacherId")] // Specify the foreign key property
+        public User Teacher { get; set; }
     }
 }
