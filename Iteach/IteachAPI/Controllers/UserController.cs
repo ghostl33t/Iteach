@@ -67,4 +67,10 @@ public class UserController : ControllerBase
 
         return Ok(generatedChildId);
     }
+    [Route("get-parents")]
+    [HttpGet]
+    public async Task<IActionResult> GetParents()
+    {
+        return Ok(await _userRepository.GetParents());
+    }
 }

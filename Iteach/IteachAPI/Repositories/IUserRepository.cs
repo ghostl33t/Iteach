@@ -9,4 +9,5 @@ public interface IUserRepository
     public Task<User> GetUserById(int id, int role);
     public Task<int> AddChild(Child child);
     public Task<bool> IsUserUnique(string email);
+    public Task<List<ParentGetDTO>> GetParents();
 }
