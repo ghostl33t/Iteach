@@ -3,6 +3,7 @@ using IteachAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IteachAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309060329_UpdateChildTestsTable")]
+    partial class UpdateChildTestsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,14 +58,14 @@ namespace IteachAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("ChildId")
+                    b.Property<long?>("ChildId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("TeacherFeedback")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TestId")
+                    b.Property<long?>("TestId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -122,32 +125,6 @@ namespace IteachAPI.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("TestResponseTable");
-                });
-
-            modelBuilder.Entity("IteachAPI.Models.Suggestion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<long>("ChildId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("SuggestionBasedOnTests")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SuggestionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChildId");
-
-                    b.ToTable("Suggestions");
                 });
 
             modelBuilder.Entity("IteachAPI.Models.TeachPlan", b =>
@@ -250,15 +227,11 @@ namespace IteachAPI.Migrations
                 {
                     b.HasOne("IteachAPI.Models.Child", "Child")
                         .WithMany()
-                        .HasForeignKey("ChildId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChildId");
 
                     b.HasOne("IteachAPI.Models.Test", "Test")
                         .WithMany()
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TestId");
 
                     b.Navigation("Child");
 
@@ -301,17 +274,6 @@ namespace IteachAPI.Migrations
                     b.Navigation("Child");
 
                     b.Navigation("Test");
-                });
-
-            modelBuilder.Entity("IteachAPI.Models.Suggestion", b =>
-                {
-                    b.HasOne("IteachAPI.Models.Child", "Child")
-                        .WithMany()
-                        .HasForeignKey("ChildId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Child");
                 });
 #pragma warning restore 612, 618
         }
