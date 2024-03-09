@@ -40,8 +40,11 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IOpenAI, OpenAI>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITestRepository, TestRepository>();
+builder.Services.AddScoped<IChildRepository, ChildRepository>();
 var app = builder.Build();
 app.UseCors("AllowReactApp");
+
 //// Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{

@@ -17,7 +17,8 @@ public class OpenAI : IOpenAI
             var requestData = new
             {
                 model = "gpt-3.5-turbo-instruct",
-                prompt = prompt
+                prompt = prompt,
+                max_tokens = 500
             };
 
             var jsonRequestData = JsonSerializer.Serialize(requestData);

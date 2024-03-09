@@ -6,7 +6,6 @@ public interface IUserRepository
 {
     public Task<bool> CreateUserAsync(User newUser);
     public Task<int> LoginUser(LoginDTO loginDto);
-    public Task<bool> AddKid();
     public Task<User> GetUserById(int id, int role);
     public Task<int> AddChild(Child child);
 }
