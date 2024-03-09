@@ -3,10 +3,12 @@ using IteachAPI.Models.MtMTables;
 
 namespace IteachAPI.Services.Interfaces
 {
-    public interface IUserServiceS
+    public interface IUserService
     {
         
-        public bool PostChildInformations (TestResponse testRespons);
+        Task<ErrorProvider> PostChildInformations (TestResponse testRespons);
+        Task<ErrorProvider> GetTests(User user); 
+        Task<ErrorProvider> AddChild (Child child, User user);
 
     }
 }
