@@ -8,32 +8,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IteachAPI.Controllers;
 
-namespace IteachAPI.Controllers
-{
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private IUserRepository _userRepository;
-    public UserController(IUserRepository userRepository)
+        private IUserRepository _userRepository;
         public readonly IUserService _userService;
+        
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IUserRepository userRepository)
     {
         _userRepository = userRepository;
             _userService = userService;
     }
+
+    [HttpPost("TestResponse")]
+    public async Task<IActionResult> PostChildInformations(TestResponse testResponse)
+    {
+        var answer = await _userService.PostChildInformations(testResponse);
+        if (answer.Status)
+            return Ok(answer.Error);
+        return BadRequest(answer.Error);
+    }
     [HttpPost]
     public async Task<IActionResult> CreateUserAsync([FromBody] RegisterDTO newUserDto)
-
-        [HttpPost("TestResponse")]
-        public async Task<IActionResult> PostChildInformations(TestResponse testResponse)
-    {
-            var answer = await _userService.PostChildInformations(testResponse);
-            if (answer.Status)
-                return Ok(answer.Error);
-            return BadRequest(answer.Error);
-        }
+    { 
+        
         var newUser = new User();
         newUser.FirstName = newUserDto.FirstName;
         newUser.LastName = newUserDto.LastName;
@@ -49,23 +49,26 @@ public class UserController : ControllerBase
             return Ok("User created successfully!");
         return BadRequest("Bad Request");
     }
-    [Route("login")]
+
+    [HttpPost("GetTests")]
+    public async Task<IActionResult> GetTests(User user)
+    {
+        var answer = await _userService.GetTests(user);
+        if (answer.Status == false)
+            return BadRequest(answer.Error);
+        return Ok(answer.Object);
+    }
+        [Route("login")]
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDTO userCreds)
-        [HttpPost("GetTests")]
-
-        public async Task<IActionResult> GetTests (User user)
-    {
-            var answer = await _userService.GetTests(user);
-            if (answer.Status == false)
-                return BadRequest(answer.Error);
-            return Ok(answer.Object);    
+    { 
         var userId = await _userRepository.LoginUser(userCreds);
         if (userId == 0) 
             return BadRequest("User doesn't exist!");
 
         return Ok($"UserId = {userId}");
     }
+
     [Route("child-add")]
     [HttpPost]
     public async Task<IActionResult> ChildAdd([FromBody] ChildAddDTO childAddDto)
