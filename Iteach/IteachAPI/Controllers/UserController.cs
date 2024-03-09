@@ -36,11 +36,11 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDTO userCreds)
     {
-        var userId = await _userRepository.LoginUser(userCreds);
-        if (userId == 0) 
+        var user = await _userRepository.LoginUser(userCreds);
+        if (user == null) 
             return BadRequest("User doesn't exist!");
 
-        return Ok($"UserId = {userId}");
+        return Ok(user);
     }
     [Route("child-add")]
     [HttpPost]
