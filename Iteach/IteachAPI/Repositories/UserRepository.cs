@@ -73,4 +73,14 @@ public class UserRepository : IUserRepository
 
         return true;
     }
+    public async Task<List<ParentGetDTO>> GetParents()
+    {
+        var users = await _dbContext.Users.AsNoTracking().Where(x => x.Roles == 1).ToListAsync();
+        var parentsDto = new List<ParentGetDTO>();
+        foreach(var item in users)
+            parentsDto.Add(new ParentGetDTO() { Id = item.Id,NameMail = item.FirstName + " " + item.LastName 
+                           + $"({item.Email})"});
+
+        return parentsDto;
+    }
 }
