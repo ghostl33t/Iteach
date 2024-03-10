@@ -60,8 +60,8 @@ public class UserController : ControllerBase
 
         var child = new Child();
         child.Parent = parent;
-        child.FirstName = childAddDto.FirstName;
-        child.LastName = childAddDto.LastName;
+        child.FirstName = childAddDto.ChildName;
+        child.LastName = childAddDto.ChildSurname;
 
         var generatedChildId = await _userRepository.AddChild(child);
 
